@@ -24,10 +24,16 @@ namespace PokerLeaderboard.Console
                 LookupCountryData.AddLookupCountry(connectionString: connectionString, fullName: fullName, abbreviation: abbreviation);
             }
 
-            List<LookupCountry> countries = await LookupCountryData.GetAllLookupCountries(connectionString);
+            List<LookupCountry> countries = await LookupCountryData.Get(connectionString);
             foreach (LookupCountry country in countries)
             {
                 System.Console.WriteLine($"Country Name: {country.FullName}. Abbreviation: {country.Abbreviation}.");
+            }
+
+            List<Person> persons = await PersonData.Get(connectionString);
+            foreach (Person person in persons)
+            {
+                System.Console.WriteLine($"Person Name: {person.FullName}. Winnings: {person.Winnings}. Country: {person.Country.Abbreviation}");
             }
         }
     }

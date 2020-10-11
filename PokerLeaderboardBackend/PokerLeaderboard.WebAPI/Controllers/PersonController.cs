@@ -12,20 +12,20 @@ namespace PokerLeaderboard.WebAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class LookupCountryController : ControllerBase
+    public class PersonController : ControllerBase
     {
-        private readonly ILogger<LookupCountryController> _logger;
+        private readonly ILogger<PersonController> _logger;
 
-        public LookupCountryController(ILogger<LookupCountryController> logger)
+        public PersonController(ILogger<PersonController> logger)
         {
             _logger = logger;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<LookupCountry>> Get()
+        public async Task<IEnumerable<Person>> Get()
         {
             string connectionString = "Host=balarama.db.elephantsql.com;Port=5432;Username=xukiiogf;Password=REkQDxhkxXdSd9Yj7gbj75ovitfPxr7k;Database=xukiiogf;Integrated Security=true;Pooling=true;Timeout=30";
-            return await LookupCountryData.Get(connectionString);
+            return await PersonData.Get(connectionString);
         }
     }
 }

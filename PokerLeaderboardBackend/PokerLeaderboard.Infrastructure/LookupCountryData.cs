@@ -20,7 +20,7 @@ namespace PokerLeaderboard.Infrastructure
                 await cmd.ExecuteNonQueryAsync();
             }
         }
-        public static async Task<List<LookupCountry>> GetAllLookupCountries(string connectionString)
+        public static async Task<List<LookupCountry>> Get(string connectionString)
         {
             List<LookupCountry> result = new List<LookupCountry>();
             await using var conn = new NpgsqlConnection(connectionString);
