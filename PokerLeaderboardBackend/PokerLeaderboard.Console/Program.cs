@@ -13,7 +13,7 @@ namespace PokerLeaderboard.Console
             List<LookupCountry> countries = LookupCountryData.GetAllLookupCountries(connectionString);
             foreach (LookupCountry country in countries)
             {
-                System.Console.WriteLine(country.FullName);
+                System.Console.WriteLine($"Country Name: {country.FullName}. Abbreviation: {country.Abbreviation}.");
             }
         }
     }

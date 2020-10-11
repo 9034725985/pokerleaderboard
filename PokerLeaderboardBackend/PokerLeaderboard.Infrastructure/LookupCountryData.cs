@@ -24,13 +24,13 @@ namespace PokerLeaderboard.Infrastructure
                         Guid externalId = new Guid(reader.GetString(1));
                         string fullName = reader.GetString(2);
                         string abbreviation = reader.GetString(3);
-                        LookupCountry lookupCountry = new LookupCountry()
-                        {
-                            Id = id,
-                            ExternalId = externalId,
-                            FullName = fullName,
-                            Abbreviation = abbreviation
-                        };
+                        LookupCountry lookupCountry = new LookupCountry
+                        (
+                            id: id,
+                            externalId: externalId,
+                            fullName: fullName,
+                            abbreviation: abbreviation
+                        );
                         result.Add(lookupCountry);
                     }
                 }
