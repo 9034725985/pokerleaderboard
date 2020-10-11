@@ -1,5 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
+  <ItemGroup>
+    <ProjectReference Include="..\PokerLeaderboard.BusinessLogic\PokerLeaderboard.BusinessLogic.csproj" />
+    <ProjectReference Include="..\PokerLeaderboard.Infrastructure\PokerLeaderboard.Infrastructure.csproj" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
