@@ -3,30 +3,31 @@ using System.Collections.Generic;
 using Npgsql;
 using System;
 using PokerLeaderboard.BusinessLogic;
+using System.Threading.Tasks;
 
 namespace PokerLeaderboard.Infrastructure
 {
     public class LookupCountryData
     {
-        public static void AddLookupCountry(string connectionString, string fullName, string abbreviation)
+        public static async void AddLookupCountry(string connectionString, string fullName, string abbreviation)
         {
-            using var conn = new NpgsqlConnection(connectionString);
-            conn.Open();
-            using (var cmd = new NpgsqlCommand("INSERT INTO lookup_country (full_name, abbreviation) VALUES (@full_name, @abbreviation)", conn))
+            await using var conn = new NpgsqlConnection(connectionString: connectionString);
+            await conn.OpenAsync();
+            await using (var cmd = new NpgsqlCommand("INSERT INTO lookup_country (full_name, abbreviation) VALUES (@full_name, @abbreviation)", conn))
             {
                 cmd.Parameters.AddWithValue("full_name", fullName);
                 cmd.Parameters.AddWithValue("abbreviation", abbreviation);
-                cmd.ExecuteNonQuery();
+                await cmd.ExecuteNonQueryAsync();
             }
         }
-        public static List<LookupCountry> GetAllLookupCountries(string connectionString)
+        public static async Task<List<LookupCountry>> GetAllLookupCountries(string connectionString)
         {
             List<LookupCountry> result = new List<LookupCountry>();
-            using var conn = new NpgsqlConnection(connectionString);
-            conn.Open();
-            using (var cmd = new NpgsqlCommand("SELECT id, external_id, full_name, abbreviation FROM lookup_country", conn))
+            await using var conn = new NpgsqlConnection(connectionString);
+            await conn.OpenAsync();
+            await using (var cmd = new NpgsqlCommand("SELECT id, external_id, full_name, abbreviation FROM lookup_country", conn))
             {
-                using (var reader = cmd.ExecuteReader())
+                await using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
