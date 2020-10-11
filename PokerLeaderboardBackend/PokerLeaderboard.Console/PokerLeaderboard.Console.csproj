@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PokerLeaderboard.Infrastructure\PokerLeaderboard.Infrastructure.csproj" />
+    <ProjectReference Include="..\PokerLeaderboard.BusinessLogic\PokerLeaderboard.BusinessLogic.csproj" />
   </ItemGroup>
 
 </Project>

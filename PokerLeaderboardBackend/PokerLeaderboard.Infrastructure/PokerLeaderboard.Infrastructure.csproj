@@ -8,4 +8,8 @@
     <PackageReference Include="Npgsql" Version="4.1.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PokerLeaderboard.BusinessLogic\PokerLeaderboard.BusinessLogic.csproj" />
+  </ItemGroup>
+
 </Project>
