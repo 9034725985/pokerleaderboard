@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using PokerLeaderboard.BusinessLogic;
 using PokerLeaderboard.Infrastructure;
 
 namespace PokerLeaderboard.Console
@@ -9,11 +10,10 @@ namespace PokerLeaderboard.Console
         {
             string connectionString = "Host=balarama.db.elephantsql.com;Port=5432;Username=xukiiogf;Password=REkQDxhkxXdSd9Yj7gbj75ovitfPxr7k;Database=xukiiogf;Integrated Security=true;Pooling=true;Timeout=30";
 
-            LookupCountry lookupCountry = new LookupCountry();
-            List<string> countries = lookupCountry.GetAllLookupCountryNames(connectionString);
-            foreach (string country in countries)
+            List<LookupCountry> countries = LookupCountryData.GetAllLookupCountries(connectionString);
+            foreach (LookupCountry country in countries)
             {
-                System.Console.WriteLine(country);
+                System.Console.WriteLine(country.FullName);
             }
         }
     }
