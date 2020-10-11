@@ -7,8 +7,8 @@ create table lookup_country
 (
   id integer primary key generated always as identity,
   external_id varchar(255) default gen_random_uuid() unique not null,
-  full_name varchar(255) not null,
-  abbreviation varchar(10) not null
+  full_name varchar(255) unique not null,
+  abbreviation varchar(10) unique not null
 );
 
 create table person
