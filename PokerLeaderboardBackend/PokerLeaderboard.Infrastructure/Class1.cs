@@ -33,9 +33,7 @@ namespace PokerLeaderboard.Infrastructure
                     }
 
                 }
-            }
-            
-                
+            }    
         }
     }
 }
