@@ -9,4 +9,8 @@
     <PackageReference Include="Npgsql" Version="4.1.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PokerLeaderboard.Infrastructure\PokerLeaderboard.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
