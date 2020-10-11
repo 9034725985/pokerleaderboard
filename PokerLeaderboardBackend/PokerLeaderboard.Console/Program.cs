@@ -20,14 +20,17 @@ namespace PokerLeaderboard.Console
             {
                 string fullName = Guid.NewGuid().ToString();
                 string abbreviation = fullName.Substring(fullName.Length - 10);
-                LookupCountryData.AddLookupCountry(connectionString: connectionString, fullName: fullName, abbreviation: abbreviation);
+                decimal winnings = 10;
+                string countryAbbreviation = "USA";
+                // LookupCountryData.AddLookupCountry(connectionString: connectionString, fullName: fullName, abbreviation: abbreviation);
+                PersonData.AddPerson(connectionString: connectionString, fullName: fullName, winnings: winnings, countryAbbreviation: countryAbbreviation);
             }
 
-            List<LookupCountry> countries = await LookupCountryData.Get(connectionString);
-            foreach (LookupCountry country in countries)
-            {
-                System.Console.WriteLine($"Country Name: {country.FullName}. Abbreviation: {country.Abbreviation}.");
-            }
+            // List<LookupCountry> countries = await LookupCountryData.Get(connectionString);
+            // foreach (LookupCountry country in countries)
+            // {
+            //     System.Console.WriteLine($"Country Name: {country.FullName}. Abbreviation: {country.Abbreviation}.");
+            // }
 
             List<Person> persons = await PersonData.Get(connectionString);
             foreach (Person person in persons)

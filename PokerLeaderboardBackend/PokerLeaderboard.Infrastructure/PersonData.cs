@@ -9,15 +9,29 @@ namespace PokerLeaderboard.Infrastructure
 {
     public class PersonData
     {
-        public static async void AddPerson(string connectionString, string fullName, string abbreviation)
+        public static async void AddPerson(string connectionString, string fullName, decimal winnings, string countryAbbreviation)
         {
             await using var conn = new NpgsqlConnection(connectionString: connectionString);
             await conn.OpenAsync();
-            await using (var cmd = new NpgsqlCommand("INSERT INTO lookup_country (full_name, abbreviation) VALUES (@full_name, @abbreviation)", conn))
+            try
             {
-                cmd.Parameters.AddWithValue("full_name", fullName);
-                cmd.Parameters.AddWithValue("abbreviation", abbreviation);
-                await cmd.ExecuteNonQueryAsync();
+                await using (var cmd = new NpgsqlCommand(@"insert into person(full_name, winnings, country)
+                select person_name, winnings, external_id
+                from 
+                (
+                    values 
+                    ('@fullName', '@winnings')
+                ) as person (person_name, winnings)
+                cross join (select external_id from lookup_country where abbreviation = '@abbreviation') c;", conn))
+                {
+                    cmd.Parameters.AddWithValue("full_name", fullName);
+                    cmd.Parameters.AddWithValue("winnings", winnings);
+                    cmd.Parameters.AddWithValue("abbreviation", countryAbbreviation);
+                    await cmd.ExecuteNonQueryAsync();
+                }
+            } catch (Exception e)
+            {
+                Console.WriteLine(e.Message, e);
             }
         }
         public static async Task<List<Person>> Get(string connectionString)
@@ -53,7 +67,7 @@ namespace PokerLeaderboard.Infrastructure
                             id: personId,
                             externalId: personExternalId,
                             fullName: personFullName,
-                            winnings: winnings, 
+                            winnings: winnings,
                             country: country
                         );
                         result.Add(person);
