@@ -15,21 +15,23 @@ namespace PokerLeaderboard.Infrastructure
             await conn.OpenAsync();
             try
             {
-                await using (var cmd = new NpgsqlCommand(@"insert into person(full_name, winnings, country)
-                select person_name, winnings, external_id
-                from 
-                (
-                    values 
-                    ('@fullName', '@winnings')
-                ) as person (person_name, winnings)
-                cross join (select external_id from lookup_country where abbreviation = '@abbreviation') c;", conn))
+                await using (var cmd = new NpgsqlCommand(@"
+                    insert into person(full_name, winnings, country)
+                    select person_name, winnings, external_id
+                    from 
+                    (
+                        values 
+                        ('@fullName', @winnings)
+                    ) as person (person_name, winnings)
+                    cross join (select external_id from lookup_country where abbreviation = '@abbreviation') c;", conn))
                 {
-                    cmd.Parameters.AddWithValue("full_name", fullName);
+                    cmd.Parameters.AddWithValue("fullName", fullName);
                     cmd.Parameters.AddWithValue("winnings", winnings);
                     cmd.Parameters.AddWithValue("abbreviation", countryAbbreviation);
                     await cmd.ExecuteNonQueryAsync();
                 }
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message, e);
             }
