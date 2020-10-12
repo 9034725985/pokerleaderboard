@@ -9,6 +9,7 @@ namespace PokerLeaderboard.Infrastructure
 {
     public class PersonData
     {
+
         public static async void AddPerson(string connectionString, string fullName, decimal winnings, string countryAbbreviation)
         {
             await using var conn = new NpgsqlConnection(connectionString: connectionString);
@@ -17,7 +18,7 @@ namespace PokerLeaderboard.Infrastructure
             {
                 await using (var cmd = new NpgsqlCommand(@"
                     insert into person(full_name, winnings, country)
-                    values(@fullName, @winnings, @abbreviation)", conn))
+                    values(@fullName, @winnings, (select external_id from lookup_country where abbreviation = @abbreviation))", conn))
                 {
                     cmd.Parameters.AddWithValue("fullName", fullName);
                     cmd.Parameters.AddWithValue("winnings", winnings);
