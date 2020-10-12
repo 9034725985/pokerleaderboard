@@ -33,7 +33,7 @@ namespace PokerLeaderboard.Infrastructure
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message, e);
+                Console.WriteLine(e.Message);
             }
         }
         public static async Task<List<Person>> Get(string connectionString)

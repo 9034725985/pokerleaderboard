@@ -16,13 +16,10 @@ namespace PokerLeaderboard.Console
 
         static async Task MainAsync(string connectionString)
         {
-            for (int i = 0; i < 3; i++)
-            {
-                string fullName = "Kus";
-                decimal winnings = 0;
-                string countryAbbreviation = "USA";
-                PersonData.AddPerson(connectionString: connectionString, fullName: fullName, winnings: winnings, countryAbbreviation: countryAbbreviation);
-            }
+            string fullName = "Kus";
+            decimal winnings = 0;
+            string countryAbbreviation = "USA";
+            PersonData.AddPerson(connectionString: connectionString, fullName: fullName, winnings: winnings, countryAbbreviation: countryAbbreviation);
 
             List<Person> persons = await PersonData.Get(connectionString);
             foreach (Person person in persons)
