@@ -21,7 +21,7 @@ namespace PokerLeaderboard.Infrastructure
                     from 
                     (
                         values 
-                        ('@fullName', @winnings)
+                        ('@fullName', @winnings::numeric)
                     ) as person (person_name, winnings)
                     cross join (select external_id from lookup_country where abbreviation = '@abbreviation') c;", conn))
                 {
