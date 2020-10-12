@@ -45,7 +45,7 @@ namespace PokerLeaderboard.Infrastructure
                         int personId = reader.GetInt32(0);
                         Guid personExternalId = new Guid(reader.GetString(1));
                         string personFullName = reader.GetString(2);
-                        decimal personWinnings = reader.GetInt32(3);
+                        decimal personWinnings = reader.GetDecimal(3);
 
                         int countryId = reader.GetInt32(4);
                         Guid countryExternalId = new Guid(reader.GetString(5));
