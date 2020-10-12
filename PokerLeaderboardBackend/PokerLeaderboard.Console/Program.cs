@@ -21,15 +21,8 @@ namespace PokerLeaderboard.Console
                 string fullName = "Kus";
                 decimal winnings = 0;
                 string countryAbbreviation = "USA";
-                // LookupCountryData.AddLookupCountry(connectionString: connectionString, fullName: fullName, abbreviation: abbreviation);
                 PersonData.AddPerson(connectionString: connectionString, fullName: fullName, winnings: winnings, countryAbbreviation: countryAbbreviation);
             }
-
-            // List<LookupCountry> countries = await LookupCountryData.Get(connectionString);
-            // foreach (LookupCountry country in countries)
-            // {
-            //     System.Console.WriteLine($"Country Name: {country.FullName}. Abbreviation: {country.Abbreviation}.");
-            // }
 
             List<Person> persons = await PersonData.Get(connectionString);
             foreach (Person person in persons)
