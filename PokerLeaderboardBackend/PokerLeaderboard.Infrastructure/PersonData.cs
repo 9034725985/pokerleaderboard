@@ -17,13 +17,7 @@ namespace PokerLeaderboard.Infrastructure
             {
                 await using (var cmd = new NpgsqlCommand(@"
                     insert into person(full_name, winnings, country)
-                    select person_name, winnings, external_id
-                    from 
-                    (
-                        values 
-                        ('@fullName', @winnings::numeric)
-                    ) as person (person_name, winnings)
-                    cross join (select external_id from lookup_country where abbreviation = '@abbreviation') c;", conn))
+                    values(@fullName, @winnings, @abbreviation)", conn))
                 {
                     cmd.Parameters.AddWithValue("fullName", fullName);
                     cmd.Parameters.AddWithValue("winnings", winnings);
@@ -33,7 +27,7 @@ namespace PokerLeaderboard.Infrastructure
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine(e.Message, e);
             }
         }
         public static async Task<List<Person>> Get(string connectionString)
