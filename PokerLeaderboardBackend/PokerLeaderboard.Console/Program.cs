@@ -12,7 +12,7 @@ namespace PokerLeaderboard.Console
         {
             
             string connectionString = "Host=balarama.db.elephantsql.com;Port=5432;Username=xukiiogf;Password=REkQDxhkxXdSd9Yj7gbj75ovitfPxr7k;Database=xukiiogf;Integrated Security=true;Pooling=true;Timeout=30";
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 10; i++)
             {
                 Run(connectionString: connectionString);
             }
@@ -25,14 +25,14 @@ namespace PokerLeaderboard.Console
         static async Task MainAsync(string connectionString)
         {
             string fullName = "Kus";
-            decimal winnings = 2000M;
+            decimal winnings = 200000M;
             string countryAbbreviation = "USA";
             PersonData.AddPerson(connectionString: connectionString, fullName: fullName, winnings: winnings, countryAbbreviation: countryAbbreviation);
 
             List<Person> persons = await PersonData.Get(connectionString);
             foreach (Person person in persons)
             {
-                System.Console.WriteLine($"Person Name: {person.FullName}. Winnings: {person.Winnings}. Country: {person.Country.Abbreviation}");
+                System.Console.WriteLine($"Person Name: {person.FullName}. Winnings: {person.Winnings.ToString(System.Globalization.CultureInfo.InvariantCulture)}. Country: {person.Country.Abbreviation}");
             }
         }
     }
