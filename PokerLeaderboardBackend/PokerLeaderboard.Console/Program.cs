@@ -18,9 +18,8 @@ namespace PokerLeaderboard.Console
         {
             for (int i = 0; i < 3; i++)
             {
-                string fullName = Guid.NewGuid().ToString();
-                string abbreviation = fullName.Substring(fullName.Length - 10);
-                decimal winnings = 10;
+                string fullName = "Kus";
+                decimal winnings = 0;
                 string countryAbbreviation = "USA";
                 // LookupCountryData.AddLookupCountry(connectionString: connectionString, fullName: fullName, abbreviation: abbreviation);
                 PersonData.AddPerson(connectionString: connectionString, fullName: fullName, winnings: winnings, countryAbbreviation: countryAbbreviation);
