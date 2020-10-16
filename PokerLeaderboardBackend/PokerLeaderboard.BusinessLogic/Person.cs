@@ -14,7 +14,7 @@ namespace PokerLeaderboard.BusinessLogic
             Id = id;
             ExternalId = externalId;
             FullName = fullName;
-            Winnings = Winnings;
+            Winnings = winnings;
             Country = country;
         }
     }
