@@ -12,10 +12,7 @@ namespace PokerLeaderboard.Console
         {
             
             string connectionString = "Host=balarama.db.elephantsql.com;Port=5432;Username=xukiiogf;Password=REkQDxhkxXdSd9Yj7gbj75ovitfPxr7k;Database=xukiiogf;Integrated Security=true;Pooling=true;Timeout=30";
-            for (int i = 0; i < 10; i++)
-            {
-                Run(connectionString: connectionString);
-            }
+            Run(connectionString: connectionString);
         }
         static void Run(string connectionString)
         {
@@ -33,6 +30,8 @@ namespace PokerLeaderboard.Console
             foreach (Person person in persons)
             {
                 System.Console.WriteLine($"Person Name: {person.FullName}. Winnings: {person.Winnings.ToString(System.Globalization.CultureInfo.InvariantCulture)}. Country: {person.Country.Abbreviation}");
+                // Delete persons 
+                PersonData.DeletePerson(connectionString: connectionString, externalId: person.ExternalId);
             }
         }
     }

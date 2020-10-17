@@ -9,7 +9,24 @@ namespace PokerLeaderboard.Infrastructure
 {
     public class PersonData
     {
-
+        public static async void DeletePerson(string connectionString, Guid externalId)
+        {
+            await using var conn = new NpgsqlConnection(connectionString: connectionString);
+            await conn.OpenAsync();
+            try
+            {
+                await using (var cmd = new NpgsqlCommand(@"
+                    delete from person where external_id = @externalId", conn))
+                    {
+                    cmd.Parameters.AddWithValue("externalId", externalId);
+                    await cmd.ExecuteNonQueryAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message, e);
+            }
+        }
         public static async void AddPerson(string connectionString, string fullName, decimal winnings, string countryAbbreviation)
         {
             await using var conn = new NpgsqlConnection(connectionString: connectionString);
