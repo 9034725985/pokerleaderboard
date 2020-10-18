@@ -8,7 +8,7 @@
             "name": ".NET Core Launch (console)",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "buildConsole",
             "program": "${workspaceFolder}/PokerLeaderboard.Console/bin/Debug/netcoreapp3.1/PokerLeaderboard.Console.dll",
             "args": [],
             "cwd": "${workspaceFolder}/PokerLeaderboard.Console",

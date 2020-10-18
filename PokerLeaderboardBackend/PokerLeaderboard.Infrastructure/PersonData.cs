@@ -15,8 +15,7 @@ namespace PokerLeaderboard.Infrastructure
             await conn.OpenAsync();
             try
             {
-                await using (var cmd = new NpgsqlCommand(@"
-                    delete from person where external_id = @externalId", conn))
+                await using (var cmd = new NpgsqlCommand(@"delete from person where external_id = @externalId", conn))
                     {
                     cmd.Parameters.AddWithValue("externalId", externalId);
                     await cmd.ExecuteNonQueryAsync();
@@ -59,6 +58,50 @@ namespace PokerLeaderboard.Infrastructure
             await conn.OpenAsync();
             await using (var cmd = new NpgsqlCommand(@"select p.id, p.external_id, p.full_name, p.winnings, c.id, c.external_id, c.full_name, c.abbreviation from person p inner join lookup_country c on p.country = c.external_id;", conn))
             {
+                await using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int personId = reader.GetInt32(0);
+                        Guid personExternalId = new Guid(reader.GetString(1));
+                        string personFullName = reader.GetString(2);
+                        decimal personWinnings = reader.GetDecimal(3);
+
+                        int countryId = reader.GetInt32(4);
+                        Guid countryExternalId = new Guid(reader.GetString(5));
+                        string countryFullName = reader.GetString(6);
+                        string countryAbbreviation = reader.GetString(7);
+                        LookupCountry country = new LookupCountry
+                        (
+                            id: countryId,
+                            externalId: countryExternalId,
+                            fullName: countryFullName,
+                            abbreviation: countryAbbreviation
+                        );
+
+                        Person person = new Person
+                        (
+                            id: personId,
+                            externalId: personExternalId,
+                            fullName: personFullName,
+                            winnings: personWinnings,
+                            country: country
+                        );
+                        result.Add(person);
+                    }
+                }
+            }
+            return result;
+        }
+
+        public static async Task<List<Person>> GetByFullName(string connectionString, string fullName)
+        {
+            List<Person> result = new List<Person>();
+            await using var conn = new NpgsqlConnection(connectionString);
+            await conn.OpenAsync();
+            await using (var cmd = new NpgsqlCommand(@"select p.id, p.external_id, p.full_name, p.winnings, c.id, c.external_id, c.full_name, c.abbreviation from person p inner join lookup_country c on p.country = c.external_id where p.full_name like '%@fullName%';", conn))
+            {
+                cmd.Parameters.AddWithValue("fullName", fullName);
                 await using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())

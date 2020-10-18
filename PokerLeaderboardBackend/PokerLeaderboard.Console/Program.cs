@@ -21,15 +21,15 @@ namespace PokerLeaderboard.Console
 
         static async Task MainAsync(string connectionString)
         {
-            string fullName = "Kus";
-            decimal winnings = 200000M;
-            string countryAbbreviation = "USA";
-            await PersonData.AddPerson(connectionString: connectionString, fullName: fullName, winnings: winnings, countryAbbreviation: countryAbbreviation);
+            // string fullName = "Kus";
+            // decimal winnings = 200000M;
+            // string countryAbbreviation = "USA";
+            // await PersonData.AddPerson(connectionString: connectionString, fullName: fullName, winnings: winnings, countryAbbreviation: countryAbbreviation);
 
             List<Person> persons = await PersonData.Get(connectionString);
             foreach (Person person in persons)
             {
-                System.Console.WriteLine($"Person Name: {person.FullName}. Winnings: {person.Winnings.ToString(System.Globalization.CultureInfo.InvariantCulture)}. Country: {person.Country.Abbreviation}");
+                System.Console.WriteLine($"Person Name: {person.FullName}. External ID: {person.ExternalId}. Winnings: {person.Winnings.ToString(System.Globalization.CultureInfo.InvariantCulture)}. Country: {person.Country.Abbreviation}");
                 // Delete persons 
                 await PersonData.DeletePerson(connectionString: connectionString, externalId: person.ExternalId);
             }

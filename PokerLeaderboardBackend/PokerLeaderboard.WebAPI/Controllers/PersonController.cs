@@ -29,6 +29,11 @@ namespace PokerLeaderboard.WebAPI.Controllers
             
             return await PersonData.Get(connectionString);
         }
+        [HttpGet("{fullName}")]
+        public async Task<IEnumerable<Person>> GetByFullName(string fullName)
+        {
+            return await PersonData.Get(connectionString);
+        }
         [HttpPost]
         public async Task<bool> Create(Person person)
         {
