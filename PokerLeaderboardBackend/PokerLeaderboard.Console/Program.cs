@@ -24,14 +24,14 @@ namespace PokerLeaderboard.Console
             string fullName = "Kus";
             decimal winnings = 200000M;
             string countryAbbreviation = "USA";
-            PersonData.AddPerson(connectionString: connectionString, fullName: fullName, winnings: winnings, countryAbbreviation: countryAbbreviation);
+            await PersonData.AddPerson(connectionString: connectionString, fullName: fullName, winnings: winnings, countryAbbreviation: countryAbbreviation);
 
             List<Person> persons = await PersonData.Get(connectionString);
             foreach (Person person in persons)
             {
                 System.Console.WriteLine($"Person Name: {person.FullName}. Winnings: {person.Winnings.ToString(System.Globalization.CultureInfo.InvariantCulture)}. Country: {person.Country.Abbreviation}");
                 // Delete persons 
-                PersonData.DeletePerson(connectionString: connectionString, externalId: person.ExternalId);
+                await PersonData.DeletePerson(connectionString: connectionString, externalId: person.ExternalId);
             }
         }
     }

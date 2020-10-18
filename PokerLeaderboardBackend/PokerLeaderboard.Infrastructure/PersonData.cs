@@ -9,7 +9,7 @@ namespace PokerLeaderboard.Infrastructure
 {
     public class PersonData
     {
-        public static async void DeletePerson(string connectionString, Guid externalId)
+        public static async Task<bool> DeletePerson(string connectionString, Guid externalId)
         {
             await using var conn = new NpgsqlConnection(connectionString: connectionString);
             await conn.OpenAsync();
@@ -20,14 +20,16 @@ namespace PokerLeaderboard.Infrastructure
                     {
                     cmd.Parameters.AddWithValue("externalId", externalId);
                     await cmd.ExecuteNonQueryAsync();
+                    return true;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message, e);
+                return false;
             }
         }
-        public static async void AddPerson(string connectionString, string fullName, decimal winnings, string countryAbbreviation)
+        public static async Task<bool> AddPerson(string connectionString, string fullName, decimal winnings, string countryAbbreviation)
         {
             await using var conn = new NpgsqlConnection(connectionString: connectionString);
             await conn.OpenAsync();
@@ -41,11 +43,13 @@ namespace PokerLeaderboard.Infrastructure
                     cmd.Parameters.AddWithValue("winnings", winnings);
                     cmd.Parameters.AddWithValue("abbreviation", countryAbbreviation);
                     await cmd.ExecuteNonQueryAsync();
+                    return true;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message, e);
+                return false;
             }
         }
         public static async Task<List<Person>> Get(string connectionString)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Net;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace PokerLeaderboard.WebAPI.Controllers
     [Route("[controller]")]
     public class PersonController : ControllerBase
     {
+        private static readonly string connectionString = "Host=balarama.db.elephantsql.com;Port=5432;Username=xukiiogf;Password=REkQDxhkxXdSd9Yj7gbj75ovitfPxr7k;Database=xukiiogf;Integrated Security=true;Pooling=true;Timeout=30";
         private readonly ILogger<PersonController> _logger;
 
         public PersonController(ILogger<PersonController> logger)
@@ -24,8 +26,18 @@ namespace PokerLeaderboard.WebAPI.Controllers
         [HttpGet]
         public async Task<IEnumerable<Person>> Get()
         {
-            string connectionString = "Host=balarama.db.elephantsql.com;Port=5432;Username=xukiiogf;Password=REkQDxhkxXdSd9Yj7gbj75ovitfPxr7k;Database=xukiiogf;Integrated Security=true;Pooling=true;Timeout=30";
+            
             return await PersonData.Get(connectionString);
+        }
+        [HttpPost]
+        public async Task<bool> Create(Person person)
+        {
+            return await PersonData.AddPerson(connectionString: connectionString, fullName: "Full Name", winnings: 20M, countryAbbreviation: "USA");
+        }
+        [HttpDelete]
+        public async Task<bool> Delete(Guid ExternalId)
+        {
+            return await PersonData.DeletePerson(connectionString: connectionString, externalId: ExternalId);
         }
     }
 }

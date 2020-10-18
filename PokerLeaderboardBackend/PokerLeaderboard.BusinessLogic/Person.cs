@@ -9,7 +9,8 @@ namespace PokerLeaderboard.BusinessLogic
         public string FullName { get; set; }
         public decimal Winnings { get; set; }
         public LookupCountry Country { get; set; }
-        public Person(int id, Guid externalId, string fullName, decimal winnings, LookupCountry country) 
+        public Person() { }
+        public Person(int id, Guid externalId, string fullName, decimal winnings, LookupCountry country)
         {
             Id = id;
             ExternalId = externalId;
